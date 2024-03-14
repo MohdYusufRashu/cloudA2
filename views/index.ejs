@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Products Application</h1>
+
+        <!-- Button to show products -->
+        <button id="showProductsBtn">Show Products</button>
+
+        <!-- Button to add product (opens popup) -->
+        <button id="addProductBtn" onclick="showAddProductPopup()">Add Product</button>
+
+        <!-- Popup form to add product -->
+        <div id="addProductPopup" class="popup">
+            <h2>Add New Product</h2>
+            <form id="addProductForm" action="/add_product" method="POST">
+                <label for="productName">Product Name</label>
+                <input type="text" id="productName" name="productName" required><br>
+
+                <label for="productDescription">Description</label>
+                <input type="text" id="productDescription" name="productDescription" required><br>
+
+                <label for="productPrice">Price(in dollars)</label>
+                <input type="number" id="productPrice" name="productPrice" step="0.01" required><br>
+
+                <label for="manufacturer">Manufacturer</label>
+                <input type="text" id="manufacturer" name="manufacturer" required><br>
+
+                <label for="category">Category</label>
+                <input type="text" id="category" name="category" required><br>
+
+                <label for="stockQuantity">Stock Quantity</label>
+                <input type="number" id="stockQuantity" name="stockQuantity" required><br>
+
+                <button type="submit">Add Product</button>
+                <button type="button" onclick="hideAddProductPopup()">Close</button>
+            </form>
+        </div>
+
+        <!-- Display products if available -->
+        <table id="productTable" style="display: none;">
+            <thead>
+                <tr>
+                    <th>Product ID</th>
+                    <th>Product Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Manufacturer</th>
+                    <th>Category</th>
+                    <th>Stock Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (products && products.length) { %>
+                    <% products.forEach(product => { %>
+                        <tr>
+                            <td><%= product.ProductID %></td>
+                            <td><%= product.Name %></td>
+                            <td><%= product.Description %></td>
+                            <td>$<%= product.Price.toFixed(2) %></td>
+                            <td><%= product.Manufacturer %></td>
+                            <td><%= product.Category %></td>
+                            <td><%= product.StockQuantity %></td>
+                        </tr>
+                    <% }); %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="7">No products available</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+
+        <!-- Button to close product table -->
+        <button id="closeProductTableBtn" style="display: none;" onclick="hideProductTable()">Close</button>
+    </div>
+
+    <script>
+        // Function to show the add product popup
+        function showAddProductPopup() {
+            document.getElementById("addProductPopup").style.display = "block";
+        }
+
+        // Function to hide the add product popup
+        function hideAddProductPopup() {
+            document.getElementById("addProductPopup").style.display = "none";
+        }
+
+        // Function to hide the product table
+        function hideProductTable() {
+            document.getElementById("productTable").style.display = "none";
+            document.getElementById("closeProductTableBtn").style.display = "none";
+        }
+
+        // Event listener for the "Show Products" button
+        document.getElementById("showProductsBtn").addEventListener("click", function() {
+            document.getElementById("productTable").style.display = "block";
+            document.getElementById("closeProductTableBtn").style.display = "block";
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
